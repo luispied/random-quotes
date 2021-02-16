@@ -1,49 +1,33 @@
 import "./App.css";
+import Quote from "./components/Quote";
+import NoQuote from "./components/NoQuote";
 import React, { useState, useEffect } from "react";
 
-function App() {
+export default function App() {
   const [data, setData] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [color, setColor] = useState("#000000");
 
   useEffect(() => {
-    fetch("https://quotes.rest/quote/random")
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw response;
-      })
-      .then((data) => {
-        setData(data);
-      })
-      .catch((error) => {
-        console.log("Error fetching data: ", error);
-        setError(error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    getQuote();
   }, []);
 
-  if (loading) return "Loading...";
-  if (error) return "Error!";
+  const randomBg = () => {
+    const color = `hsl(${Math.floor(Math.random() * 360)}, 100%, 50%)`;
+    setColor(color);
+    return color;
+  };
 
-  return (
-    <section id="wrapper">
-      <div id="quote-box">
-        <i class="fa fa-quote-left"></i>
-        <span id="text">Text</span>
-        <span id="author">Author</span>
-        <button id="new-quote">New quote</button>
-      </div>
-      <footer>
-        <a id="tweet-quote" href="twitter.com/intent/tweet">
-          by someone
-        </a>
-      </footer>
-    </section>
-  );
+  const getQuote = async () => {
+    const response = await fetch(
+      `http://quotes.stormconsultancy.co.uk/random.json`
+    );
+    const data = await response.json();
+    setData(data);
+    document.body.style.background = randomBg();
+  };
+
+  if (data) {
+    return <Quote color={color} data={data} getQuote={getQuote} />;
+  }
+  return <NoQuote color={color} data={data} getQuote={getQuote} />;
 }
-
-export default App;
