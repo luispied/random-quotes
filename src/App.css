@@ -40,7 +40,7 @@ body {
   display: grid;
   align-self: end;
   gap: 1rem;
-  width: 75vw;
+  width: 50vw;
   justify-self: center;
   background-color: #fff;
   animation: 1s ease forwards resize;
@@ -50,7 +50,7 @@ body {
 #text {
   justify-self: start;
   font-size: 1.5rem;
-  line-height: 1.8rem;
+  line-height: 2rem;
   animation: 1s ease-out forwards slideInLeft;
   transition: var(--transitions-fast);
 }
