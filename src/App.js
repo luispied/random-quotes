@@ -20,7 +20,7 @@ export default function App() {
 
   const getQuote = async () => {
     const response = await fetch(
-      `http://quotes.stormconsultancy.co.uk/random.json`
+      `https://quotes.stormconsultancy.co.uk/random.json`
     );
     const data = await response.json();
     setData(data);
